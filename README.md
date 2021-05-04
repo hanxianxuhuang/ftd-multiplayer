@@ -13,9 +13,7 @@ React, Web Sockets, Material-UI, MongoDB, PostgreSQL, JavaScript, jQuery, Restfu
 
 ### Installing required packages
 ```
-sudo apt install nodejs 
-sudo apt install npm 
-sudo apt install postgresql
+sudo apt install nodejs npm postgresql
 ```
 
 ### Setting up PostgreSQL
@@ -33,18 +31,14 @@ EXIT
 ### Setting up and starting the server
 ```
 # cd into the directory
-cd server
-chmod +x setup.bash
-./setup.bash
+cd server && chmod +x setup.bash && ./setup.bash
 ```
 
 
 ### Setting up and starting the client (React)
 ```
 # bring up another terminal and cd into the directory
-cd client
-chmod +x setup.bash
-./setup.bash
+cd client && chmod +x setup.bash && ./setup.bash
 ```
 
 ## Usage
