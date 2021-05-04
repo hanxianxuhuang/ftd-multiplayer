@@ -48,6 +48,7 @@ chmod +x setup.bash
 ```
 
 ## Usage
-
-Visit IP_ADDRESS:3000 in browser (use "ip a" to determine IP_ADDRESS)
+- ```cd server && npm start``` if the server has not started
+- ```cd client && npm start``` if the client has not started
+- Visit IP_ADDRESS:3000 in browser (use ```ip a``` to determine IP_ADDRESS)
 
