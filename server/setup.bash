@@ -5,7 +5,6 @@ sudo apt-get install -y mongodb-org
 sudo chown -R mongodb:mongodb /var/lib/mongodb
 sudo chown -R mongodb:mongodb /var/log/mongodb
 sudo systemctl start mongod
-sudo systemctl status mongod
 
 npm install cors --silent
 npm install express --silent
