@@ -9,7 +9,7 @@ React, Web Sockets, Material-UI, MongoDB, PostgreSQL, JavaScript, jQuery, Restfu
 ## Setup
 
 ### VM
-[A Ubuntu Server](https://ubuntu.com/download/server/step2) (others may also work) that has network connection configured to either Bridged or NAT
+[A Ubuntu Server](https://ubuntu.com/download/server/step2) (others may also work) that has network connection configured to Bridged
 
 ### Installing required packages
 ```
