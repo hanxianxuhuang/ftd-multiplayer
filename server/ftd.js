@@ -483,18 +483,22 @@ wss.broadcast = function(){
 			ws.send(JSON.stringify(data)); // send the game updates to the client
 		}
 
-		// Record the data in MongoDB so client can replay later
-		MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
-			if (!err){ // connect to MongoDB successfully
-				var replays = db.db("replays"); // store the data in the replays database
-				replays.collection("replay_" + ws.id).insertOne({[ws.time]: data}, function(err, res) {
-					if (!err){
-						ws.time += 1; // add 1 to the time since the data has been stored
-					}
-					db.close();
-				});
-			}
-		});
+		if (ws.mongo_ready){ // make sure the previous data has been added before adding new data
+			ws.mongo_ready = 0;
+			// Record the data in MongoDB so client can replay later
+			MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
+				if (!err){ // connect to MongoDB successfully
+					var replays = db.db("replays"); // store the data in the replays database
+					replays.collection("replay_" + ws.id).insertOne({[ws.time]: data}, function(err, res) {
+						if (!err){
+							ws.time += 1; // add 1 to the time since the data has been stored
+							ws.mongo_ready = 1;
+						}
+						db.close();
+					});
+				}
+			});
+		}
 	}  
 }
 
@@ -526,6 +530,7 @@ wss.on('connection', function(ws) {
 	// Assign the new player an id
 	ws.id = count;
 	ws.time = 0;
+	ws.mongo_ready = 1;
 
 	// notify the new client his/her player_id and square_id
 	var assignment = {"type" : "assignment", "id" : count, "square_id" : stage.squares_number};
