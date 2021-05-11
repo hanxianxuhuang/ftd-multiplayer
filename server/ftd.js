@@ -52,7 +52,7 @@ app.get('/api/scores', function (req, res) {
 	let sql_medium_scores = "SELECT * FROM ftdstats WHERE level = 'medium' ORDER BY score DESC LIMIT 10;";
 	let sql_hard_scores = "SELECT * FROM ftdstats WHERE level = 'hard' ORDER BY score DESC LIMIT 10;";
 
-	// the sql callbacks are nested since they are asychronous and the function may return before all scores are retrieved
+	// the sql callbacks are nested since they are asynchronous and the function may return before all scores are retrieved
 	pool.query(sql_easy_scores, [], (err, pgRes) => {
 		if(err){ 
 			res.status(404).json({'message': 'Unknown error occured'});
@@ -97,7 +97,7 @@ app.get('/api/enemies', function (req, res) {
 	let sql_medium_numbers_of_enemies = "SELECT * FROM ftdstats WHERE level = 'medium' ORDER BY enemies DESC LIMIT 10;";
 	let sql_hard_numbers_of_enemies = "SELECT * FROM ftdstats WHERE level = 'hard' ORDER BY enemies DESC LIMIT 10;";
 
-	// the sql callbacks are nested since they are asychronous and the function may return before all numbers of enemies are retrieved
+	// the sql callbacks are nested since they are asynchronous and the function may return before all numbers of enemies are retrieved
 	pool.query(sql_easy_numbers_of_enemies, [], (err, pgRes) => {
 		if(err){ 
 			res.status(404).json({'message': 'Unknown error occured'});
@@ -484,13 +484,12 @@ wss.broadcast = function(){
 		}
 
 		// Record the data in MongoDB so client can replay later
+		var current_time = ws.time; // avoid asynchronous issue
+		ws.time += 1; // add 1 to the time since the data will be stored
 		MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
 			if (!err){ // connect to MongoDB successfully
 				var replays = db.db("replays"); // store the data in the replays database
-				replays.collection("replay_" + ws.id).insertOne({[ws.time]: data}, function(err, res) {
-					if (!err){
-						ws.time += 1; // add 1 to the time since the data has been stored
-					}
+				replays.collection("replay_" + ws.id).insertOne({[current_time]: data}, function(err, res) {
 					db.close();
 				});
 			}
@@ -536,22 +535,17 @@ wss.on('connection', function(ws) {
 	ws.send(JSON.stringify(complete_data));
 
 	// Start to record player's state so the player can replay later
+	ws.time += 1; // add 1 to the time since the data will be stored
 	MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
 		if (!err){ // connect to MongoDB successfully
 			var replays = db.db("replays"); // record the data in the replays database
-
 			// Drop the replay of the previous client that has the same id (since the server may restart)
 			replays.collection("replay_" + ws.id).drop(function(err, delOK) {
-
 				// Create a new collection for storing the new replay call replay_id
 				replays.createCollection("replay_" + ws.id, function(err, res) {
 					if (!err){
-
 						// Insert the first message (complete state) to the collection
-						replays.collection("replay_" + ws.id).insertOne({[ws.time]: complete_data}, function(err, res) {
-							if (!err){
-								ws.time += 1; // add 1 to the time since the data has been stored
-							}
+						replays.collection("replay_" + ws.id).insertOne({0: complete_data}, function(err, res) {
 							db.close();
 						});
 					} else{
@@ -661,10 +655,16 @@ replayWss.broadcast = function(){
 		if (ws.id != -1){ // the client is watching replay
 			// Check if the client has finished watching the replay
 			if (ws.time < ws.data_length){ // The replay hasn't finished
-				if (ws.time in ws.data[ws.time]){ // should always be true unless the db has serious error
+				if (ws.time in ws.data[ws.time]){ // The order of data is not messed up in MongoDB
 					ws.send(JSON.stringify(ws.data[ws.time][ws.time])); // Send the replay update to the client
-					ws.time += 1; // add 1 to the time since client has watched this stage
+				} else{ // The order of data is messed up in MongoDB so search for the correct one in all data
+					for (let i = 0; i < ws.data_length; i++){
+						if (ws.time in ws.data[i]){ 
+							ws.send(JSON.stringify(ws.data[i][ws.time])); // Send the replay update to the client
+						}
+					}
 				}
+				ws.time += 1; // add 1 to the time since client has watched this stage
 			} else if (ws.data_length == -1) {
 				// the client has sent a request to watch replay, but data is still being retrieved from MongoDB
 				// since getting data from MongoDB is asynchronous

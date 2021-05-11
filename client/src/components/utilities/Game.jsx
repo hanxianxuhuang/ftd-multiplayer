@@ -43,15 +43,15 @@ class Game extends React.Component {
 	 * 
 	 */
 	componentWillUnmount = () =>{
-		// Close the socket since the user will go to other pages
-		if (this.socket !== null){
-			this.socket.close();
-		}
-
 		// Remove event listeners since user's actions are no longer needed
 		document.removeEventListener("keydown", this.keyPressed);
 		this.window.removeEventListener("mousemove", this.moveMouse);
 		this.window.removeEventListener("click", this.clickMouse);
+
+		// Close the socket since the user will go to other pages
+		if (this.socket !== null){
+			this.socket.close();
+		}
 	}
 
 	/**
@@ -162,6 +162,7 @@ class Game extends React.Component {
 			if (!this.replay){ 
 				this.recordScore();
 			}
+			this.stage.draw();
 		} else if (message["type"] === "error"){ // this message indicates something went wrong
 			this.gameEnded = true;
 			this.stage.lose = false;
