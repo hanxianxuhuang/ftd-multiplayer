@@ -1,5 +1,5 @@
-# ftd-multiplayer
-A multiplayer shooting game 
+# ftd-multiplayer-uncontainerized
+An uncontainerized multiplayer shooting game 
 
 ## [Singleplayer Version](https://github.com/hanxianxuhuang/ftd-singleplayer)
 ## [Multiplayer Version (Containerized)](https://github.com/hanxianxuhuang/ftd-multiplayer-containerized)
