@@ -2,6 +2,7 @@
 A multiplayer shooting game 
 
 ## [Singleplayer Version](https://github.com/hanxianxuhuang/ftd-singleplayer)
+## [Multiplayer Version (Containerized)](https://github.com/hanxianxuhuang/ftd-multiplayer-containerized)
 
 ## Tools
 React, Web Sockets, Material-UI, MongoDB, PostgreSQL, JavaScript, jQuery, Restful API, Node.js, Express.js, Ajax and Middleware
