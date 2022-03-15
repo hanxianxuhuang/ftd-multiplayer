@@ -1,11 +1,11 @@
 import React from 'react';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import HelpIcon from '@material-ui/icons/Help';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import HelpIcon from '@mui/icons-material/Help';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 /**
  * 

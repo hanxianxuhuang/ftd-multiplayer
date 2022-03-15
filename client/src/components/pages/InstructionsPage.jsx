@@ -1,6 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 /**
  * 
@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 class InstructionsPage extends React.Component {
 	render(){
 		return (
-			<div>
-				<Grid container direction="column" justify="center" alignItems='center' spacing={1}>
+            <div>
+				<Grid container direction="column" justifyContent="center" alignItems='center' spacing={1}>
 					<Grid item>
 						<Typography variant="h3">
 							Objects
@@ -65,7 +65,7 @@ class InstructionsPage extends React.Component {
 					<Grid item></Grid> <Grid item></Grid> <Grid item></Grid>
 				</Grid>
 
-				<Grid container direction="column" justify="center" alignItems='center' spacing={1}>
+				<Grid container direction="column" justifyContent="center" alignItems='center' spacing={1}>
 					<Grid item>
 						<Typography variant="h3">
 							Operations
@@ -113,7 +113,7 @@ class InstructionsPage extends React.Component {
 					<Grid item></Grid> <Grid item></Grid> <Grid item></Grid>
 				</Grid>
 
-				<Grid container direction="column" justify="center" alignItems='center' spacing={1}>
+				<Grid container direction="column" justifyContent="center" alignItems='center' spacing={1}>
 					<Grid item>
 						<Typography variant="h3">
 							Features
@@ -157,7 +157,7 @@ class InstructionsPage extends React.Component {
 					</Grid>
 				</Grid>
 			</div>
-		);
+        );
 	}
 }
 

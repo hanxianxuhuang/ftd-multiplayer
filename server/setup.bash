@@ -6,11 +6,7 @@ sudo chown -R mongodb:mongodb /var/lib/mongodb
 sudo chown -R mongodb:mongodb /var/log/mongodb
 sudo systemctl start mongod
 
-npm install cors --silent
-npm install express --silent
-npm install pg --silent
-npm install ws --silent
-npm install mongodb --silent
+npm install
 
 psql "dbname='webdb' user='webdbuser' password='password' host='localhost'" -f db/schema.sql
 

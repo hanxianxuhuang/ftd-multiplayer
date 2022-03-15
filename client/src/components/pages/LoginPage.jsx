@@ -1,6 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import $ from 'jquery'; 
 import {Username} from '../inputs/Username'
 import {Password} from '../inputs/Password'
@@ -130,9 +130,9 @@ class LoginPage extends React.Component {
 
 	render() {
 		return (
-			<div>
+            <div>
 				<form onSubmit={e => this.login(e)}>
-					<Grid container direction="column" justify="center" alignItems='center' spacing={3}>
+					<Grid container direction="column" justifyContent="center" alignItems='center' spacing={3}>
 						<Grid item>
 							<Typography variant="h4">
 								f0rt9it32d Login
@@ -157,7 +157,7 @@ class LoginPage extends React.Component {
 					</Grid>
 				</form>
 			</div>
-		);
+        );
 	}
 }
 
